@@ -49,11 +49,18 @@ viewBar : Html
 viewBar =
   let
     forms =
-      [ rect 750 40
-        |> filled blue
-        |> move (0,0)
+      [ rect 800 40
+          |> filled blue
+
+      , rect 2 20
+          |> filled black
+          |> move (0, -10)
+
+      , rect 2 10
+          |> filled black
+          |> move (-20, -15)
       ]
   in
     div
       []
-      [ fromElement (collage 750 40 forms) ]
+      [ fromElement (collage 800 40 forms) ]
