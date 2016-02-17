@@ -35,3 +35,6 @@ viewItems address items =
         ul
           [ class "items" ]
           ( List.map viewItem items )
+
+viewBar =
+  div [] []
