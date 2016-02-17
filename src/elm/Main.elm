@@ -1,6 +1,10 @@
 
+import App.Model as App exposing (Model)
+import App.Update exposing (init, update)
+import App.View exposing (view)
+
 import Effects exposing (Never)
-import Counter exposing (init, update, view)
+
 import StartApp
 import Task
 
