@@ -39,6 +39,6 @@ type alias Item =
 
 initialItems : List Item
 initialItems =
-  [ Item "(1) image" Image initialPosition
-  , Item "(2) animated" (Animated RepeatAll) initialPosition
+  [ Item "Image" Image initialPosition
+  , Item "Animated" (Animated RepeatAll) initialPosition
   ]
