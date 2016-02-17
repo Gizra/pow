@@ -5,6 +5,8 @@ import Timeline.Model exposing (initialModel, Model)
 
 type Action
   = AddItem Item
+  | SelectItem Item
+  | UnselectItems
 
 update : Action -> Model -> Model
 update action model =
@@ -15,3 +17,9 @@ update action model =
         items' = item :: model.items
       in
         { model | items = items' }
+
+    SelectItem item ->
+      model
+
+    UnselectItems ->
+      model
