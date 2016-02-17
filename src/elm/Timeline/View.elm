@@ -1,7 +1,15 @@
 module Timeline.View where
 
-import Html                        exposing (div, h2, li, span, text, ul, Html)
-import Html.Attributes             exposing (class)
+import Graphics.Input
+import Text exposing (fromString)
+import Graphics.Element exposing (color, layers, leftAligned, sizeOf)
+import Graphics.Collage exposing (collage, outlined, rect, solid, toForm, filled, move)
+import Color exposing (blue, black, orange, yellow)
+
+import Html                        exposing (div, h2, fromElement, li, span, text, ul, Html)
+import Html.Attributes             exposing (class, style)
+
+
 
 -- Components
 import Item.Model      as Item     exposing (Item)
@@ -14,6 +22,7 @@ view address model =
   div
     [ class "timeline"]
     [ h2 [] [ text "Timeline" ]
+    , viewBar
     , viewItems address model.items
     ]
 
@@ -36,5 +45,15 @@ viewItems address items =
           [ class "items" ]
           ( List.map viewItem items )
 
+viewBar : Html
 viewBar =
-  div [] []
+  let
+    forms =
+      [ rect 750 40
+        |> filled blue
+        |> move (0,0)
+      ]
+  in
+    div
+      []
+      [ fromElement (collage 750 40 forms) ]
