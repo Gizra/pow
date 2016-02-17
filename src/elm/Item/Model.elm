@@ -32,7 +32,7 @@ type Bundle
   | Text String
 
 type alias Item =
-  { name : String
+  { label : String
   , bundle : Bundle
   , position : Position
   }
