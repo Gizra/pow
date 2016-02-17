@@ -29,6 +29,8 @@ view address model =
     , viewItems address model.items
     ]
 
+
+
 viewItems : Signal.Address Action -> Dict.Dict Int Item -> Html
 viewItems address items =
   if Dict.isEmpty items
@@ -36,25 +38,27 @@ viewItems address items =
       div [] [ text "No items selected yet..." ]
     else
       let
-        linkItem (id, item) =
-          a
-            [ href "javascript:void(0);"
-            , onClick address (Timeline.Update.SelectItem id item)
-            ]
-            [ text <| (toString id) ++ ") " ++ item.label ]
-
         viewItem (id, item) =
           li
             []
-            [ linkItem (id, item)
+            [ linkItem address (id, item)
             , span [] [ text <| " Start time: " ++ (toString item.position.startTime) ]
             , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
+            , span [] [ text <| ", Selected: " ++ (toString item.selected) ]
             ]
 
       in
         ul
           [ class "items" ]
           ( Dict.toList items |> List.map viewItem )
+
+linkItem : Signal.Address Action -> (Int, Item) -> Html
+linkItem address (id, item) =
+  a
+    [ href "javascript:void(0);"
+    , onClick address (Timeline.Update.ToggleItemSelection id item (not item.selected))
+    ]
+    [ text <| (toString id) ++ ") " ++ item.label ]
 
 
 -- Get all the bar forms
