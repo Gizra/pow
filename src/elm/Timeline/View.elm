@@ -13,5 +13,6 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   div
     [ class "timeline"]
-    [ text "Timeline"
+    [ h2 [] [ text "Timeline" ]
+    , text "Timeline"
     ]

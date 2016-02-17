@@ -14,7 +14,8 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   div
     [ class "library"]
-    [ ul [ class "items" ] (List.map viewItem model.items)
+    [ h2 [] [ text "Library" ]
+    , ul [ class "items" ] (List.map viewItem model.items)
     ]
 
 viewItem : Item -> Html
