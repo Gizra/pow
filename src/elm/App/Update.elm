@@ -8,9 +8,6 @@ import App.Model as App exposing (initialModel, Model)
 import Library.Update  exposing (Action)
 import Timeline.Update exposing (Action)
 
-type alias Model = App.Model
-
-
 init : (Model, Effects Action)
 init =
   ( App.initialModel
@@ -38,7 +35,7 @@ update action model =
               (Task.succeed (ChildTimelineAction <| Timeline.Update.AddItem item) |> Effects.task)
       in
         ( { model | library = childModel }
-        , Effects.none
+        , effects'
         )
 
     ChildTimelineAction act ->
