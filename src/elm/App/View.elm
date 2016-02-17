@@ -19,13 +19,13 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   div
     []
-    [ viewLibrary address model
+    [ viewTimeline address model
     ]
 
-viewLibrary : Signal.Address Action -> Model -> Html
-viewLibrary address model =
+viewTimeline : Signal.Address Action -> Model -> Html
+viewTimeline address model =
   let
     childLibraryAddress =
-      Signal.forwardTo address App.Update.ChildLibraryAction
+      Signal.forwardTo address App.Update.ChildTimelineAction
   in
-    div [] [ Library.View.view childLibraryAddress model.library ]
+    div [] [ Timeline.View.view childLibraryAddress model.timeline ]

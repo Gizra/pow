@@ -13,6 +13,6 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-  { library : Library.initialModel
-  , timeline : Timeline.initialModel
+  { library = Library.initialModel
+  , timeline = Timeline.initialModel
   }
