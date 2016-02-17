@@ -7,8 +7,10 @@ import Graphics.Element exposing (color, layers, leftAligned, sizeOf)
 import Graphics.Collage exposing (collage, outlined, rect, solid, toForm, filled, move, moveX, ngon, rotate)
 import Color exposing (blue, black, orange, yellow, red)
 
-import Html                        exposing (div, h2, fromElement, li, span, text, ul, Html)
-import Html.Attributes             exposing (class, style)
+import Html                        exposing (a, div, h2, fromElement, li, span, text, ul, Html)
+import Html.Attributes             exposing (class, href, style)
+import Html.Events                 exposing (onClick)
+
 
 
 
@@ -34,12 +36,18 @@ viewItems address items =
       div [] [ text "No items selected yet..." ]
     else
       let
+        linkItem (id, item) =
+          a
+            [ href "javascript:void(0);"
+            , onClick address (Timeline.Update.SelectItem item)
+            ]
+            [ text <| (toString id) ++ ") " ++ item.label ]
+
         viewItem (id, item) =
           li
             []
-            [ span [] [ text <| (toString id) ++ ") " ++ item.label ]
-            , span [] [ text item.label ]
-            , span [] [ text <| "Start time: " ++ (toString item.position.startTime) ]
+            [ linkItem (id, item)
+            , span [] [ text <| " Start time: " ++ (toString item.position.startTime) ]
             , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
             ]
 
