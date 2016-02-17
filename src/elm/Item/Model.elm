@@ -34,12 +34,13 @@ type Bundle
 type alias Item =
   { label : String
   , bundle : Bundle
+  , selected : Bool
   , position : Position
   }
 
 initialItems : List Item
 initialItems =
-  [ Item "Image" Image initialPosition
-  , Item "Another Image" Image initialPosition
-  , Item "Animated" (Animated RepeatAll) initialPosition
+  [ Item "Image" Image False initialPosition
+  , Item "Another Image" Image False  initialPosition
+  , Item "Animated" (Animated RepeatAll) False  initialPosition
   ]

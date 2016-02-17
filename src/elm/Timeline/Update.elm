@@ -7,7 +7,7 @@ import Timeline.Model exposing (initialModel, Model)
 
 type Action
   = AddItem Item
-  | SelectItem Item
+  | SelectItem Int Item
   | UnselectItems
 
 update : Action -> Model -> Model
@@ -23,8 +23,14 @@ update action model =
         , counter = model.counter + 1
         }
 
-    SelectItem item ->
-      model
+    SelectItem index item ->
+      -- Dict.insert replaces the existing record.
+      let
+        item' = { item | selected = True }
+        items' = Dict.insert model.counter item model.items
+      in
+        { model | items = items' }
+
 
     UnselectItems ->
       model

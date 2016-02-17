@@ -39,7 +39,7 @@ viewItems address items =
         linkItem (id, item) =
           a
             [ href "javascript:void(0);"
-            , onClick address (Timeline.Update.SelectItem item)
+            , onClick address (Timeline.Update.SelectItem id item)
             ]
             [ text <| (toString id) ++ ") " ++ item.label ]
 
