@@ -1,14 +1,17 @@
 module Timeline.Model where
 
+import Dict exposing (Dict, empty)
 import Item.Model as Item exposing (Item)
 
 type alias Model =
-  { items : List Item
+  { counter : Int
+  , items : Dict Int Item
   , selectedItems : Maybe (List Item)
   }
 
 initialModel : Model
 initialModel =
-  { items = []
+  { counter = 0
+  , items = Dict.empty
   , selectedItems = Nothing
   }

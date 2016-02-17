@@ -1,5 +1,6 @@
 module Timeline.View where
 
+import Dict exposing (map)
 import Graphics.Input
 import Text exposing (fromString)
 import Graphics.Element exposing (color, layers, leftAligned, sizeOf)
@@ -24,26 +25,29 @@ view address model =
     [ h2 [] [ text "Timeline" ]
     , viewBar
     , viewItems address model.items
+    , div [] [text <| toString (Dict.values model.items)]
     ]
 
-viewItems : Signal.Address Action -> List Item -> Html
+viewItems : Signal.Address Action -> Dict.Dict Int Item -> Html
 viewItems address items =
-  if List.isEmpty items
+  if Dict.isEmpty items
     then
       div [] [ text "No items selected yet..." ]
     else
       let
-        viewItem item =
+        viewItem _ item =
           li
             []
             [ span [] [ text item.label ]
             , span [] [ text <| "Start time: " ++ (toString item.position.startTime) ]
             , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
             ]
+
       in
         ul
           [ class "items" ]
-          ( List.map viewItem items )
+          -- ( Dict.values items |> List.map viewItem )
+          []
 
 
 -- Get all the bar forms
