@@ -37,7 +37,10 @@ update action model =
       model
 
     Track (Just ( i, MoveBy ( dx, dy ) )) ->
-      model
+      let
+        startTimePicker' = 20
+      in
+        { model | startTimePicker = startTimePicker' }
 
     Track (Just ( i, Release )) ->
       model

@@ -25,7 +25,7 @@ view address model =
   div
     [ class "timeline"]
     [ h2 [] [ text "Timeline" ]
-    , viewBar
+    , viewBar model.startTimePicker
     , viewItems address model.items
     ]
 
@@ -62,8 +62,8 @@ linkItem address (id, item) =
 
 
 -- Get all the bar forms
-getForms : List Graphics.Collage.Form
-getForms =
+getForms : Float -> List Graphics.Collage.Form
+getForms startTimePicker =
   let
     hand index =
       rect 2 20
@@ -84,14 +84,14 @@ getForms =
     startTime =
       ngon 3 15
         |> filled yellow
-        |> move (0, 15)
+        |> move (startTimePicker, 15)
         |> rotate (degrees 30)
   in
     bar :: startTime :: (hands True) ++ (hands False)
 
 
-viewBar : Html
-viewBar =
+viewBar : Float -> Html
+viewBar startTimePicker =
   div
     []
-    [ fromElement (collage 800 40 getForms) ]
+    [ fromElement (collage 800 40 (getForms startTimePicker)) ]
