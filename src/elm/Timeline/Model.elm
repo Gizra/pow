@@ -1,28 +1,12 @@
-module Config.Model where
+module Timeline.Model where
 
-type alias BackendConfig =
-  { backendUrl : String
-  , githubClientId : String
-  , name : String
-  -- Url information
-  , hostname : String
-  }
-
-initialBackendConfig : BackendConfig
-initialBackendConfig =
-  { backendUrl = ""
-  , githubClientId = ""
-  , name = ""
-  , hostname = ""
-  }
+import Item.Model as Item exposing (Item)
 
 type alias Model =
-  { backendConfig : BackendConfig
-  , error : Bool
+  { item : List Item
   }
 
 initialModel : Model
 initialModel =
-  { backendConfig = initialBackendConfig
-  , error = False
+  { item = []
   }
