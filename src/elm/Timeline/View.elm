@@ -34,10 +34,11 @@ viewItems address items =
       div [] [ text "No items selected yet..." ]
     else
       let
-        viewItem item =
+        viewItem (id, item) =
           li
             []
-            [ span [] [ text item.label ]
+            [ span [] [ text <| (toString id) ++ ") " ++ item.label ]
+            , span [] [ text item.label ]
             , span [] [ text <| "Start time: " ++ (toString item.position.startTime) ]
             , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
             ]
@@ -45,8 +46,7 @@ viewItems address items =
       in
         ul
           [ class "items" ]
-          ( Dict.values items |> List.map viewItem )
-          -- []
+          ( Dict.toList items |> List.map viewItem )
 
 
 -- Get all the bar forms
