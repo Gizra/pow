@@ -3,10 +3,10 @@ module Timeline.Model where
 import Item.Model as Item exposing (Item)
 
 type alias Model =
-  { item : List Item
+  { items : List Item
   }
 
 initialModel : Model
 initialModel =
-  { item = []
+  { items = []
   }

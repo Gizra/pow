@@ -1,12 +1,13 @@
 module Library.Model where
 
-import Item.Model as Item exposing (Item)
+import Item.Model as Item exposing (Item, initialItems)
 
 type alias Model =
-  { item : List Item
+  { items : List Item
   }
+
 
 initialModel : Model
 initialModel =
-  { item = []
+  { items = initialItems
   }
