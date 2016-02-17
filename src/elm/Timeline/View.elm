@@ -14,9 +14,19 @@ view address model =
   div
     [ class "timeline"]
     [ h2 [] [ text "Timeline" ]
-    , ul [ class "items" ] (List.map viewItem model.items)
+    , viewItems address model.items
     ]
 
-viewItem : Item -> Html
-viewItem item =
-  li [] [ text item.label ]
+viewItems : Signal.Address Action -> List Item -> Html
+viewItems address items =
+  if List.isEmpty items
+    then
+      div [] [ text "No items selected yet..." ]
+    else
+      let
+        viewItem item =
+          li [] [ text item.label ]
+      in
+        ul
+          [ class "items" ]
+          ( List.map viewItem items )
