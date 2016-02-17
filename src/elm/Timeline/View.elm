@@ -1,6 +1,6 @@
 module Timeline.View where
 
-import Html                        exposing (div, h2, li, text, ul, Html)
+import Html                        exposing (div, h2, li, span, text, ul, Html)
 import Html.Attributes             exposing (class)
 
 -- Components
@@ -25,7 +25,12 @@ viewItems address items =
     else
       let
         viewItem item =
-          li [] [ text item.label ]
+          li
+            []
+            [ span [] [ text item.label ]
+            , span [] [ text <| "Start time: " ++ (toString item.position.startTime) ]
+            , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
+            ]
       in
         ul
           [ class "items" ]
