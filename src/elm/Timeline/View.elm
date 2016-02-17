@@ -25,7 +25,6 @@ view address model =
     [ h2 [] [ text "Timeline" ]
     , viewBar
     , viewItems address model.items
-    , div [] [text <| toString (Dict.values model.items)]
     ]
 
 viewItems : Signal.Address Action -> Dict.Dict Int Item -> Html
@@ -35,7 +34,7 @@ viewItems address items =
       div [] [ text "No items selected yet..." ]
     else
       let
-        viewItem _ item =
+        viewItem item =
           li
             []
             [ span [] [ text item.label ]
@@ -46,8 +45,8 @@ viewItems address items =
       in
         ul
           [ class "items" ]
-          -- ( Dict.values items |> List.map viewItem )
-          []
+          ( Dict.values items |> List.map viewItem )
+          -- []
 
 
 -- Get all the bar forms
