@@ -1,6 +1,7 @@
 module App.Update where
 
 import Effects exposing (Effects)
+import Task exposing (succeed)
 
 -- Components
 import App.Model as App exposing (initialModel, Model)
@@ -30,8 +31,13 @@ update action model =
     ChildLibraryAction act ->
       let
         childModel = Library.Update.update act model.library
+
+        effects' =
+          case act of
+            Library.Update.SelectItem item ->
+              (Task.succeed (ChildTimelineAction <| Timeline.Update.AddItem item) |> Effects.task)
       in
-        ( {model | library = childModel }
+        ( { model | library = childModel }
         , Effects.none
         )
 
@@ -39,7 +45,7 @@ update action model =
       let
         childModel = Timeline.Update.update act model.timeline
       in
-        ( {model | timeline = childModel }
+        ( { model | timeline = childModel }
         , Effects.none
         )
 

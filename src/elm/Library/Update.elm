@@ -1,12 +1,15 @@
 module Library.Update where
 
-import Library.Model exposing (initialModel, Model)
+import Item.Model as Item exposing (Item)
+import Library.Model      exposing (initialModel, Model)
 
 type Action
-  = SelectItem 
+  = SelectItem Item
 
 update : Action -> Model -> Model
 update action model =
   case action of
-    SelectItem ->
+    SelectItem item ->
+      -- Nothing changes in the model, we simply use it here in order to
+      -- propograte the action.
       model
