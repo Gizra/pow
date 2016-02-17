@@ -3,8 +3,8 @@ module Timeline.View where
 import Graphics.Input
 import Text exposing (fromString)
 import Graphics.Element exposing (color, layers, leftAligned, sizeOf)
-import Graphics.Collage exposing (collage, outlined, rect, solid, toForm, filled, move, moveX)
-import Color exposing (blue, black, orange, yellow)
+import Graphics.Collage exposing (collage, outlined, rect, solid, toForm, filled, move, moveX, ngon, rotate)
+import Color exposing (blue, black, orange, yellow, red)
 
 import Html                        exposing (div, h2, fromElement, li, span, text, ul, Html)
 import Html.Attributes             exposing (class, style)
@@ -65,8 +65,14 @@ getForms =
     bar =
       rect 800 40
         |> filled blue
+
+    startTime =
+      ngon 3 15
+        |> filled yellow
+        |> move (0, 15)
+        |> rotate (degrees 30)
   in
-    bar :: (hands True) ++ (hands False)
+    bar :: startTime :: (hands True) ++ (hands False)
 
 
 viewBar : Html
