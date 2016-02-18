@@ -33,16 +33,21 @@ viewItems : Signal.Address Action -> Dict.Dict Int Item -> Html
 viewItems address items =
   if Dict.isEmpty items
     then
-      div [] [ text "No items selected yet..." ]
+      div
+        [ class "messgae"]
+        [ span [ class "fa fa-exclamation-circle orange"] []
+        , text " No items selected yet..."
+        ]
     else
       let
         viewItem (id, item) =
           li
             []
             [ linkItem address (id, item)
-            , span [] [ text <| " Start time: " ++ (toString item.position.startTime) ]
-            , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
-            , span [] [ text <| ", Selected: " ++ (toString item.selected) ]
+            , span [ class "label"] [ text "Start time: "]
+            , span [ class "value"] [ text (toString item.position.startTime) ]
+            , span [ class "label"] [ text "Selected: " ]
+            , span [ class "value"] [ text (toString item.selected) ]
             ]
 
       in
