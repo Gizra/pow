@@ -48,8 +48,6 @@ viewItems address items =
             [ linkItem address (id, item)
             , span [ class "label"] [ text "Start time: "]
             , span [ class "value"] [ text (toString item.position.startTime) ]
-            , span [ class "label"] [ text "End time: " ]
-            , span [ class "value"] [ text (toString item.position.endTime) ]
             , span [ class "label"] [ text "Selected: " ]
             , span [ class "value"] [ text (toString item.selected) ]
             ]
