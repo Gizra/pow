@@ -116,5 +116,4 @@ viewBar model =
   div
     []
     [ fromElement (collage 800 40 (getForms model))
-    , div [] [ text <| toString model.startTimePicker ]
     ]

@@ -1,14 +1,12 @@
 module Timeline.Update where
 
-import Dict exposing (insert)
+import Dict exposing (Dict, insert)
 import Drag exposing (..)
 
+-- Components
 
 import Item.Model     as Item exposing (Item)
 import Timeline.Model         exposing (initialModel, Model)
-import Timeline.Utils         exposing (getSelectedItems)
-
-import Debug
 
 
 type Action
@@ -100,29 +98,21 @@ update action model =
       in
         { model | items = items' }
 
--- updateSelectedItemsStartTime : Model -> Float -> Model
+-- updateSelectedItemsStartTime : Dict (Int, Item) -> Float -> Model
 updateSelectedItemsStartTime items time =
   let
-    selectedItems = getSelectedItems items
+    -- Iterate over the selected items, and update their time
+    setItem index item =
+      let
+        position = item.position
+        position' =
+          if item.selected == True
+            then { position | startTime = time }
+            else position
+      in
+        { item | position = position' }
   in
-    if (Dict.isEmpty selectedItems)
-      then
-        -- No items to update.
-        items
-      else
-        let
-          -- Iterate over the selected items, and update their time
-          func item =
-            let
-              position = item.position
-              position' = { position | startTime = time }
-            in
-              { item | position = position' }
-
-          items' =
-            Dict.map func items
-        in
-          items
+    Dict.map setItem items
 
 
 
