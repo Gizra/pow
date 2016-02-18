@@ -39,7 +39,7 @@ startTimeHover =
 -- opposite). I suppose the difference is that the drag library demands
 -- access to a Signal. I suppoe we could instead thread the Signal down
 -- via addresses, like we do with view ...
-startTimeActions : Signal Action 
+startTimeActions : Signal Action
 startTimeActions =
     Signal.map Track <|
         track False startTimeHover.signal
@@ -70,7 +70,7 @@ update action model =
       model
 
     Track (Just (MoveBy (dx, dy))) ->
-      { model | startTimePicker = model.startTimePicker + (toFloat dx) }
+      { model | startTimePicker = moveBy model.startTimePicker dx }
 
     Track (Just Release) ->
       model
@@ -79,5 +79,13 @@ update action model =
       model
 
 
-moveBy ( dx, dy ) ( x, y ) =
-    ( x + toFloat dx, 0 )
+moveBy : Float -> Int -> Float
+moveBy x dx =
+    let
+      val = x + toFloat dx
+    in
+      if val < -400
+        then -400
+      else if val > 400
+        then 400
+      else val

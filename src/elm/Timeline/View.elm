@@ -98,7 +98,7 @@ getForms startTimePicker =
       collage 800 40 [startTime]
         |> hoverable (Signal.message startTimeHover.address)
         |> toForm
-    
+
   in
     -- It looks like startTimeHoverable has to be last in the list,
     -- otherwise the dragging doesn't work.
@@ -109,4 +109,6 @@ viewBar : Float -> Html
 viewBar startTimePicker =
   div
     []
-    [ fromElement (collage 800 40 (getForms startTimePicker)) ]
+    [ fromElement (collage 800 40 (getForms startTimePicker))
+    , div [] [ text <| toString startTimePicker ]
+    ]
