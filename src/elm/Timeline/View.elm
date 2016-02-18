@@ -18,8 +18,6 @@ import Timeline.Model  as Timeline exposing (initialModel, Model)
 import Timeline.Update             exposing (Action, startTimeHover, startTimeActions)
 import Timeline.Utils              exposing (getSelectedItems)
 
-import Debug
-
 view : Signal.Address Action -> Model -> Html
 view address model =
   div
@@ -105,7 +103,7 @@ getForms model =
     -- won't work.
     if (Dict.isEmpty <| getSelectedItems model.items)
       then
-        defualtBar        
+        defualtBar
       else
         -- Hide the startTime
         defualtBar ++ [startTimeHoverable]
@@ -118,5 +116,4 @@ viewBar model =
   div
     []
     [ fromElement (collage 800 40 (getForms model))
-    , div [] [ text <| toString model.startTimePicker ]
     ]
