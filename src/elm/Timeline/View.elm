@@ -26,7 +26,7 @@ view address model =
   div
     [ class "timeline"]
     [ h2 [] [ text "Timeline" ]
-    , viewBar model.startTimePicker
+    , viewBar model
     , viewItems address model.items
     ]
 
@@ -63,8 +63,8 @@ linkItem address (id, item) =
 
 
 -- Get all the bar forms
-getForms : Float -> List Graphics.Collage.Form
-getForms startTimePicker =
+getForms : Model -> List Graphics.Collage.Form
+getForms model =
   let
     hand index =
       rect 2 20
@@ -85,7 +85,7 @@ getForms startTimePicker =
     startTime =
       ngon 3 15
         |> filled yellow
-        |> move (startTimePicker, 15)
+        |> move (model.startTimePicker, 15)
         |> rotate (degrees 30)
 
     -- We need to make it hoverable, but that requires an element. But,
@@ -99,16 +99,24 @@ getForms startTimePicker =
         |> hoverable (Signal.message startTimeHover.address)
         |> toForm
 
+    defualtBar =
+      [bar] ++ (hands True) ++ (hands False)
   in
-    -- It looks like startTimeHoverable has to be last in the list,
-    -- otherwise the dragging doesn't work.
-    [bar] ++ (hands True) ++ (hands False) ++ [startTimeHoverable]
+    -- startTimeHoverable has to be last in the list, otherwise the dragging
+    -- won't work.
+    if (not <| Dict.isEmpty model.items)
+      then
+        defualtBar ++ [startTimeHoverable]
+      else
+        -- Hide the startTime
+        defualtBar
 
 
-viewBar : Float -> Html
-viewBar startTimePicker =
+
+viewBar : Model -> Html
+viewBar model =
   div
     []
-    [ fromElement (collage 800 40 (getForms startTimePicker))
-    , div [] [ text <| toString startTimePicker ]
+    [ fromElement (collage 800 40 (getForms model))
+    , div [] [ text <| toString model.startTimePicker ]
     ]
