@@ -4,13 +4,18 @@ import Dict exposing (insert)
 import Drag exposing (..)
 
 
-import Item.Model as Item exposing (Item)
-import Timeline.Model exposing (initialModel, Model)
+import Item.Model     as Item exposing (Item)
+import Timeline.Model         exposing (initialModel, Model)
+import Timeline.Utils         exposing (getSelectedItems)
+
+import Debug
+
 
 type Action
   = AddItem Item
   | ToggleItemSelection Int Item Bool
   | Track (Maybe Drag.Action)
+  | UpdateSelectedItemsStartTime Float
 
 
 -- Whether the mouse is hovering over the start time. I think it makes
@@ -70,13 +75,55 @@ update action model =
       model
 
     Track (Just (MoveBy (dx, dy))) ->
-      { model | startTimePicker = moveBy model.startTimePicker dx }
+      let
+        time =
+          moveBy model.startTimePicker dx
+
+        items' =
+          updateSelectedItemsStartTime model.items time
+      in
+        { model
+        | startTimePicker = time
+        , items = items'
+        }
 
     Track (Just Release) ->
       model
 
     Track _ ->
       model
+
+    UpdateSelectedItemsStartTime time ->
+      let
+        items' =
+          updateSelectedItemsStartTime model.items time
+      in
+        { model | items = items' }
+
+-- updateSelectedItemsStartTime : Model -> Float -> Model
+updateSelectedItemsStartTime items time =
+  let
+    selectedItems = getSelectedItems items
+  in
+    if (Dict.isEmpty selectedItems)
+      then
+        -- No items to update.
+        items
+      else
+        let
+          -- Iterate over the selected items, and update their time
+          func item =
+            let
+              position = item.position
+              position' = { position | startTime = time }
+            in
+              { item | position = position' }
+
+          items' =
+            Dict.map func items
+        in
+          items
+
 
 
 moveBy : Float -> Int -> Float
