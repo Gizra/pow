@@ -1,16 +1,19 @@
 module Timeline.Update where
 
-import Dict exposing (insert)
+import Dict exposing (Dict, insert)
 import Drag exposing (..)
 
+-- Components
 
-import Item.Model as Item exposing (Item)
-import Timeline.Model exposing (initialModel, Model)
+import Item.Model     as Item exposing (Item)
+import Timeline.Model         exposing (initialModel, Model)
+
 
 type Action
   = AddItem Item
   | ToggleItemSelection Int Item Bool
   | Track (Maybe Drag.Action)
+  | UpdateSelectedItemsStartTime Float
 
 
 -- Whether the mouse is hovering over the start time. I think it makes
@@ -70,13 +73,47 @@ update action model =
       model
 
     Track (Just (MoveBy (dx, dy))) ->
-      { model | startTimePicker = moveBy model.startTimePicker dx }
+      let
+        time =
+          moveBy model.startTimePicker dx
+
+        items' =
+          updateSelectedItemsStartTime model.items time
+      in
+        { model
+        | startTimePicker = time
+        , items = items'
+        }
 
     Track (Just Release) ->
       model
 
     Track _ ->
       model
+
+    UpdateSelectedItemsStartTime time ->
+      let
+        items' =
+          updateSelectedItemsStartTime model.items time
+      in
+        { model | items = items' }
+
+-- updateSelectedItemsStartTime : Dict (Int, Item) -> Float -> Model
+updateSelectedItemsStartTime items time =
+  let
+    -- Iterate over the selected items, and update their time
+    setItem index item =
+      let
+        position = item.position
+        position' =
+          if item.selected == True
+            then { position | startTime = time }
+            else position
+      in
+        { item | position = position' }
+  in
+    Dict.map setItem items
+
 
 
 moveBy : Float -> Int -> Float
