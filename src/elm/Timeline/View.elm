@@ -35,7 +35,11 @@ viewItems : Signal.Address Action -> Dict.Dict Int Item -> Html
 viewItems address items =
   if Dict.isEmpty items
     then
-      div [] [ text "No items selected yet..." ]
+      div
+        [ class "messgae"]
+        [ span [ class "fa fa-exclamation-circle orange"] []
+        , text " No items selected yet..."
+        ]
     else
       let
         viewItem (id, item) =

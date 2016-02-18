@@ -8,7 +8,7 @@ html {
     margin: 200px auto 0 auto;
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.13);
-    border-radius: 3px;
+    border-radius: 6px;
     color: gray;
     font-family: 'Hind', sans-serif;
     font-size: 16px;
@@ -21,13 +21,18 @@ html {
   }
 }
 
+.orange {
+  color: orange;
+}
+
+h2 {
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 .library {
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-
   .items {
     padding: 0 0 20px 0;
     list-style: none;
@@ -35,12 +40,25 @@ html {
     margin: 0 -20px;
 
     li {
-
+      padding-bottom: 7px;
       margin-left: 20px;
 
       a {
         color: #1275b2;
+        text-decoration: none;
+
+        &:hover {
+          color: #17C6FB;
+        }
       }
     }
+  }
+}
+
+.timeline {
+  margin-top: 20px;
+
+  .messgae {
+    margin-top: 10px;
   }
 }
