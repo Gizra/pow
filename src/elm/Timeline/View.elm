@@ -46,9 +46,12 @@ viewItems address items =
           li
             []
             [ linkItem address (id, item)
-            , span [] [ text <| " Start time: " ++ (toString item.position.startTime) ]
-            , span [] [ text <| ", End time: " ++ (toString item.position.endTime) ]
-            , span [] [ text <| ", Selected: " ++ (toString item.selected) ]
+            , span [ class "label"] [ text "Start time: "]
+            , span [ class "value"] [ text (toString item.position.startTime) ]
+            , span [ class "label"] [ text "End time: " ]
+            , span [ class "value"] [ text (toString item.position.endTime) ]
+            , span [ class "label"] [ text "Selected: " ]
+            , span [ class "value"] [ text (toString item.selected) ]
             ]
 
       in

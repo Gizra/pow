@@ -55,10 +55,40 @@ h2 {
   }
 }
 
+.label {
+  font-weight: bold;
+  margin-right: 5px
+}
+
+.value {
+  margin-right: 15px
+}
+
 .timeline {
   margin-top: 20px;
 
   .messgae {
     margin-top: 10px;
+  }
+
+  .items {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+
+    li {
+      padding-bottom: 7px;
+
+      a {
+        padding-bottom: 4px;
+        display: block;
+        color: #1275b2;
+        text-decoration: none;
+
+        &:hover {
+          color: #17C6FB;
+        }
+      }
+    }
   }
 }
