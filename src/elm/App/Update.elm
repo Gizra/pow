@@ -21,6 +21,10 @@ type Action
   -- NoOp actions
   | NoOp
 
+dragActions : Signal Action
+dragActions =
+    Signal.map ChildTimelineAction Timeline.Update.startTimeActions
+
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
