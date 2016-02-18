@@ -12,14 +12,13 @@ import Html                        exposing (a, div, h2, fromElement, li, span, 
 import Html.Attributes             exposing (class, href, style)
 import Html.Events                 exposing (onClick)
 
-
-
-
 -- Components
 import Item.Model      as Item     exposing (Item)
 import Timeline.Model  as Timeline exposing (initialModel, Model)
 import Timeline.Update             exposing (Action, startTimeHover, startTimeActions)
+import Timeline.Utils              exposing (getSelectedItems)
 
+import Debug
 
 view : Signal.Address Action -> Model -> Html
 view address model =
@@ -104,12 +103,13 @@ getForms model =
   in
     -- startTimeHoverable has to be last in the list, otherwise the dragging
     -- won't work.
-    if (not <| Dict.isEmpty model.items)
+    if (Dict.isEmpty <| getSelectedItems model.items)
       then
-        defualtBar ++ [startTimeHoverable]
+        defualtBar        
       else
         -- Hide the startTime
-        defualtBar
+        defualtBar ++ [startTimeHoverable]
+
 
 
 
