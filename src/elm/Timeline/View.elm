@@ -105,7 +105,7 @@ getForms model =
     -- won't work.
     if (Dict.isEmpty <| getSelectedItems model.items)
       then
-        defualtBar        
+        defualtBar
       else
         -- Hide the startTime
         defualtBar ++ [startTimeHoverable]

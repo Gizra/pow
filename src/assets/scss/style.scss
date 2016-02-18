@@ -1,7 +1,22 @@
-body {
-  padding: 20px;
 
-  .container {
+html {
+  background-color: #1275b2;
+
+  body {
     padding: 20px;
+    width: 930px;
+    margin: 200px auto 0 auto;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 3px;
+    color: gray;
+    font-family: 'Hind', sans-serif;
+    font-size: 16px;
+    line-height: 1.2em;
+    font-weight: 100;
+    letter-spacing: 0.010em;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
 }
