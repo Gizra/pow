@@ -5,27 +5,27 @@ import Graphics.Input
 import Text exposing (fromString)
 import Graphics.Element exposing (color, layers, leftAligned, sizeOf)
 import Graphics.Collage exposing (collage, outlined, rect, solid, toForm, filled, move, moveX, ngon, rotate)
+import Graphics.Input exposing (hoverable)
 import Color exposing (blue, black, orange, yellow, red)
 
 import Html                        exposing (a, div, h2, fromElement, li, span, text, ul, Html)
 import Html.Attributes             exposing (class, href, style)
 import Html.Events                 exposing (onClick)
 
-
-
-
 -- Components
 import Item.Model      as Item     exposing (Item)
 import Timeline.Model  as Timeline exposing (initialModel, Model)
-import Timeline.Update             exposing (Action)
+import Timeline.Update             exposing (Action, startTimeHover, startTimeActions)
+import Timeline.Utils              exposing (getSelectedItems)
 
+import Debug
 
 view : Signal.Address Action -> Model -> Html
 view address model =
   div
     [ class "timeline"]
     [ h2 [] [ text "Timeline" ]
-    , viewBar
+    , viewBar model
     , viewItems address model.items
     ]
 
@@ -62,8 +62,8 @@ linkItem address (id, item) =
 
 
 -- Get all the bar forms
-getForms : List Graphics.Collage.Form
-getForms =
+getForms : Model -> List Graphics.Collage.Form
+getForms model =
   let
     hand index =
       rect 2 20
@@ -84,14 +84,39 @@ getForms =
     startTime =
       ngon 3 15
         |> filled yellow
-        |> move (0, 15)
+        |> move (model.startTimePicker, 15)
         |> rotate (degrees 30)
+
+    -- We need to make it hoverable, but that requires an element. But,
+    -- we really do want it to be a form. So, we use `collage` to turn it
+    -- into an element, and then `toForm` to turn it back into a form.
+    -- the 800 40 needs to match the 800 40 in the `collage` call in
+    -- `viewBar` below to get the scale right, so I guess those
+    -- numbers should probably be broken out as constants and re-used.
+    startTimeHoverable =
+      collage 800 40 [startTime]
+        |> hoverable (Signal.message startTimeHover.address)
+        |> toForm
+
+    defualtBar =
+      [bar] ++ (hands True) ++ (hands False)
   in
-    bar :: startTime :: (hands True) ++ (hands False)
+    -- startTimeHoverable has to be last in the list, otherwise the dragging
+    -- won't work.
+    if (Dict.isEmpty <| getSelectedItems model.items)
+      then
+        defualtBar        
+      else
+        -- Hide the startTime
+        defualtBar ++ [startTimeHoverable]
 
 
-viewBar : Html
-viewBar =
+
+
+viewBar : Model -> Html
+viewBar model =
   div
     []
-    [ fromElement (collage 800 40 getForms) ]
+    [ fromElement (collage 800 40 (getForms model))
+    , div [] [ text <| toString model.startTimePicker ]
+    ]

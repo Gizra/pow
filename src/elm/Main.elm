@@ -1,8 +1,11 @@
 
 import App.Model as App exposing (Model)
-import App.Update exposing (init, update)
+import App.Update exposing (init, update, dragActions)
 import App.View exposing (view)
 
+import Timeline.Update exposing (Action)
+
+import Drag exposing (trackMany)
 import Effects exposing (Never)
 
 import StartApp
@@ -14,7 +17,9 @@ app =
     { init = init
     , update = update
     , view = view
-    , inputs = []
+    , inputs = 
+        [ dragActions
+        ]
     }
 
 
