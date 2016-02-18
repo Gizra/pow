@@ -20,3 +20,27 @@ html {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
 }
+
+.library {
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .items {
+    padding: 0 0 20px 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    margin: 0 -20px;
+
+    li {
+
+      margin-left: 20px;
+
+      a {
+        color: #1275b2;
+      }
+    }
+  }
+}
